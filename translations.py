@@ -1,11 +1,11 @@
 TEXTS = {
     "ru": {
-        # Interface (Headings)
+        # Interface (Headings) 
         "window_title": "Квадрат Декарта",
-        "box_1": "Что будет, если это произойдет? (++)",
-        "box_2": "Что будет, если это НЕ произойдет? (+-)",
-        "box_3": "Чего НЕ будет, если это произойдет? (-+)",
-        "box_4": "Чего НЕ будет, если это НЕ произойдет? (--)",
+        "box_1": "Что будет, если это произойдет? (Плюсы от действия)",
+        "box_2": "Что будет, если это НЕ произойдет? (Плюсы от отказа)",
+        "box_3": "Чего НЕ будет, если это произойдет? (Минусы от действия)",
+        "box_4": "Чего НЕ будет, если это НЕ произойдет? (Минусы от отказа)",
         "btn_save": "Сохранить",
         
         # Placeholder (Grey text hints)
@@ -37,10 +37,11 @@ TEXTS = {
     "en": {
         # Interface
         "window_title": "Descartes Decision Helper",
-        "box_1": "What will happen if this happens? (++)",
-        "box_2": "What will happen if this does NOT happen? (+-)",
-        "box_3": "What will NOT happen if this happens? (-+)",
-        "box_4": "What will NOT happen if this does NOT happen? (--)",
+        "box_1": "What will happen if this happens? (Pros of action)",
+        "box_2": "What will happen if this does NOT happen? (Pros of inaction)",
+        "box_3": "What will NOT happen if this happens? (Cons of action)",
+        "box_4": "What will NOT happen if this does NOT happen? (Cons of inaction)",
+        # ... остальной текст без изменений
         "btn_save": "Save",
 
         # Placeholders
