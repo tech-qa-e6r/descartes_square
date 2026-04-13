@@ -86,27 +86,36 @@ class MenuManager:
         QMessageBox.about(self.window, t["instruction_title"], t["instruction_text"])
 
     def open_file(self):
-        file_name, _ = QFileDialog.getOpenFileName(
-            self.window, "Open", "", "Text Files (*.txt *.md)"
-        )
-        if not file_name: return
+            file_name, _ = QFileDialog.getOpenFileName(
+                self.window, "Open", "", "Text Files (*.txt *.md)"
+            )
+            if not file_name: return
 
-        try:
-            with open(file_name, 'r', encoding='utf-8') as f:
-                full_text = f.read()
-            
-            parts = re.split(r'^## \d\..+', full_text, flags=re.MULTILINE)
-            
-            if len(parts) >= 5:
-                def clean(txt): return re.sub(r'\*\*.*?\*\*', '', txt).strip()
+            try:
+                with open(file_name, 'r', encoding='utf-8') as f:
+                    full_text = f.read()
                 
-                self.window.input_pp.setPlainText(clean(parts[1]))
-                self.window.input_pm.setPlainText(clean(parts[2]))
-                self.window.input_mp.setPlainText(clean(parts[3]))
-                self.window.input_mm.setPlainText(clean(parts[4]))
+                parts = re.split(r'^## \d\..+', full_text, flags=re.MULTILINE)
                 
-                # Use the message from the dictionary for the title
-                msg_title = TEXTS[self.current_lang]["saved_title"]
-                QMessageBox.information(self.window, msg_title, "OK")
-        except Exception:
-            pass
+                if len(parts) >= 5:
+                    def clean(txt):
+                        # 1. Отрезаем подвал (всё, что идет начиная с ---)
+                        txt = txt.split('---')[0]
+                        # 2. Вырезаем строку с оценкой (то, что выделено жирным **)
+                        txt = re.sub(r'\*\*.*?\*\*', '', txt)
+                        # 3. Чистим от лишних пробелов и переносов строк по краям
+                        txt = txt.strip()
+                        # 4. Если при сохранении поле было пустым (сохранилось тире), возвращаем пустоту
+                        if txt == '—':
+                            return ''
+                        return txt
+                    
+                    self.window.input_pp.setPlainText(clean(parts[1]))
+                    self.window.input_pm.setPlainText(clean(parts[2]))
+                    self.window.input_mp.setPlainText(clean(parts[3]))
+                    self.window.input_mm.setPlainText(clean(parts[4]))
+                    
+                    msg_title = TEXTS[self.current_lang]["saved_title"]
+                    QMessageBox.information(self.window, msg_title, "OK")
+            except Exception as e:
+                print(f"Ошибка парсинга: {e}")
